@@ -118,3 +118,18 @@ Run tests
 ```
 docker/test
 ```
+
+### Bonus Content
+Command
+```
+app:get-profit
+```
+
+Run this command to know the earned money of each drink
+
+
+![Alt Text](https://64.media.tumblr.com/723987e60ebfffeb744f84fa92e52245/tumblr_neglojBBbo1sx56xso1_400.gif)
+<br>
+"We are amidst strange beings, in a strange land."
+<br><br>
+Solaire De Astora
