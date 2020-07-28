@@ -7,7 +7,7 @@ use Deliverea\CoffeeMachine\Domain\Drink\Model\Drink;
 use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Name;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class DrinkTypeSpecification
+class DrinkTypeSpecification
 {
     /**
      * @param Name $name

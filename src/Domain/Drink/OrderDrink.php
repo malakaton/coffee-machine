@@ -4,6 +4,7 @@ namespace Deliverea\CoffeeMachine\Domain\Drink;
 
 use Deliverea\CoffeeMachine\Domain\Drink\EarnedMoney\Repository\EarnedMoneyInterface;
 use Deliverea\CoffeeMachine\Domain\Drink\Exception\ValidationException;
+use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Money;
 use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Name;
 use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Order\DrinkCost;
 use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Order\Order;
@@ -30,22 +31,21 @@ class OrderDrink
     ): int {
 
         try {
-
-            $drinkTypeSpecification->isAvailableType($order->name, $output);
-            $drinkMoneySpecification->haveEnoughMoney($order->name, $order->money, $output);
-            $drinkSugarsSpecification->isAvailableSugars($order->sugars, $output);
+            $drinkTypeSpecification->isAvailableType($order->getName(), $output);
+            $drinkMoneySpecification->haveEnoughMoney($order->getName(), $order->getMoney(), $output);
+            $drinkSugarsSpecification->isAvailableSugars($order->getSugars(), $output);
 
         } catch (ValidationException $e) {
             return Command::FAILURE;
         }
 
         $output->write(
-            $this->buildOrderMessage($order->name, $order->extraHot, $order->sugars)
+            $this->buildOrderMessage($order->getName(), $order->getExtraHot(), $order->getSugars())
         );
 
         $orderDrink = new self();
-        $orderDrink->setName($order->name);
-        $orderDrink->setMoney((new DrinkCost())->getCostByDrink('name', $order->name->toString()));
+        $orderDrink->setName($order->getName());
+        $orderDrink->setMoney($order->getMoney());
 
         $earnedMoneyRepository->store($orderDrink);
 
@@ -78,9 +78,9 @@ class OrderDrink
         $this->name = $name->toString();
     }
 
-    private function setMoney(float $money): void
+    private function setMoney(Money $money): void
     {
-        $this->money = $money;
+        $this->money = $money->toFloat();
     }
 
     public function name(): string

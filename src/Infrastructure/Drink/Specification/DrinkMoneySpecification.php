@@ -8,7 +8,7 @@ use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Name;
 use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Order\DrinkCost;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class DrinkMoneySpecification
+class DrinkMoneySpecification
 {
     /**
      * @param Name $name

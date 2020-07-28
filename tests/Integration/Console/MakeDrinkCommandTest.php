@@ -2,15 +2,20 @@
 
 namespace Deliverea\CoffeeMachine\Tests\Integration\Console;
 
-use Deliverea\CoffeeMachine\UI\Cli\Console\MakeDrinkCommand;
 use Deliverea\CoffeeMachine\Tests\Integration\IntegrationTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class MakeDrinkCommandTest extends IntegrationTestCase
 {
+    protected $command;
+    protected CommandTester $commandTester;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->command = $this->application->find('app:order-drink');
+        $this->commandTester = new CommandTester($this->command);
     }
 
     /**
@@ -23,10 +28,9 @@ class MakeDrinkCommandTest extends IntegrationTestCase
         string $extraHot,
         string $expectedOutput
     ): void {
-        $command = $this->application->find('app:order-drink');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute(array(
-            'command'  => $command->getName(),
+
+        $this->commandTester->execute(array(
+            'command'  => $this->command->getName(),
 
             // pass arguments to the helper
             'drink-type' => $drinkType,
@@ -36,8 +40,65 @@ class MakeDrinkCommandTest extends IntegrationTestCase
         ));
 
         // the output of the command in the console
-        $output = $commandTester->getDisplay();
-        $this->assertSame($expectedOutput, $output);
+        $output = $this->commandTester->getDisplay();
+        self::assertSame($expectedOutput, $output);
+    }
+
+    /**
+     * @test
+     */
+    public function invalid_drink_type_call_validation_exception(): void
+    {
+        $this->commandTester->execute(array(
+            'command'  => $this->command->getName(),
+
+            // pass arguments to the helper
+            'drink-type' => 'fake',
+            'money' => 1,
+            'sugars' => 0,
+            '--extra-hot' => false
+        ));
+
+        $output = $this->commandTester->getDisplay();
+        self::assertEquals("The drink type should be coffee, tea, chocolate", $output);
+    }
+
+    /**
+     * @test
+     */
+    public function invalid_not_enough_money_call_validation_exception(): void
+    {
+        $this->commandTester->execute(array(
+            'command'  => $this->command->getName(),
+
+            // pass arguments to the helper
+            'drink-type' => 'tea',
+            'money' => 0.2,
+            'sugars' => 0,
+            '--extra-hot' => false
+        ));
+
+        $output = $this->commandTester->getDisplay();
+        self::assertEquals("The tea costs 0.4.", $output);
+    }
+
+    /**
+     * @test
+     */
+    public function invalid_num_sugars_call_validation_exception(): void
+    {
+        $this->commandTester->execute(array(
+            'command'  => $this->command->getName(),
+
+            // pass arguments to the helper
+            'drink-type' => 'tea',
+            'money' => 1,
+            'sugars' => 999,
+            '--extra-hot' => false
+        ));
+
+        $output = $this->commandTester->getDisplay();
+        self::assertEquals("The number of sugars should be between 0 and 2.", $output);
     }
 
     public function ordersProvider(): array

@@ -6,7 +6,7 @@ class Money
 {
     private float $money;
 
-    private function __construct(float $money)
+    public function __construct(float $money)
     {
         $this->money = $money;
     }

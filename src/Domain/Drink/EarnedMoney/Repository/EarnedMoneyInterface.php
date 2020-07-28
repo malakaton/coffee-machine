@@ -7,11 +7,5 @@ use Deliverea\CoffeeMachine\Domain\Drink\OrderDrink;
 
 interface EarnedMoneyInterface
 {
-    public function getDrinkByName(string $name): ?EarnedMoney;
-
     public function store(OrderDrink $drink): void;
-
-    public function create(OrderDrink $orderDrink): EarnedMoney;
-
-    public function updateProfit(EarnedMoney $earnedMoney, OrderDrink $orderDrink): EarnedMoney;
 }

@@ -7,7 +7,7 @@ class Sugars
     private int $sugars;
     private array $availableSugars = [0, 1, 2];
 
-    private function __construct(int $sugars)
+    public function __construct(int $sugars)
     {
         $this->sugars = $sugars;
     }

@@ -8,13 +8,13 @@ use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Sugars;
 
 class Order
 {
-    public Name $name;
+    private Name $name;
 
-    public Money $money;
+    private Money $money;
 
-    public Sugars $sugars;
+    private Sugars $sugars;
 
-    public bool $extraHot;
+    private bool $extraHot;
 
     public function __construct(Name $name, Money $money, Sugars $sugars, bool $extraHot)
     {
@@ -22,5 +22,25 @@ class Order
         $this->money = $money;
         $this->sugars = $sugars;
         $this->extraHot = $extraHot;
+    }
+
+    public function getName(): Name
+    {
+        return $this->name;
+    }
+
+    public function getMoney(): Money
+    {
+        return $this->money;
+    }
+
+    public function getSugars(): Sugars
+    {
+        return $this->sugars;
+    }
+
+    public function getExtraHot(): bool
+    {
+        return $this->extraHot;
     }
 }
