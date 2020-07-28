@@ -2,7 +2,6 @@
 
 namespace Deliverea\CoffeeMachine\Domain\Drink\EarnedMoney\Repository;
 
-use Deliverea\CoffeeMachine\Domain\Entity\EarnedMoney;
 use Deliverea\CoffeeMachine\Domain\Drink\OrderDrink;
 
 interface EarnedMoneyInterface

@@ -6,7 +6,6 @@ use Deliverea\CoffeeMachine\Domain\Drink\EarnedMoney\Repository\EarnedMoneyInter
 use Deliverea\CoffeeMachine\Domain\Drink\Exception\ValidationException;
 use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Money;
 use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Name;
-use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Order\DrinkCost;
 use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Order\Order;
 use Deliverea\CoffeeMachine\Domain\Drink\ValueObject\Sugars;
 use Deliverea\CoffeeMachine\Infrastructure\Drink\Specification\DrinkMoneySpecification;
