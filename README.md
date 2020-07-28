@@ -119,7 +119,8 @@ Run tests
 docker/test
 ```
 
-### Bonus Content
+## Bonus Content
+
 Command
 ```
 app:get-profit
